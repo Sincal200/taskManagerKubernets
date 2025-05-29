@@ -1,0 +1,156 @@
+*{
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+
+}
+
+body{
+  background-color: #17181F;
+  color: #ddd;
+}
+
+main{
+  max-width: 360px;
+  margin: 30px auto;
+}
+
+h1{
+  text-align: center;
+  color: #fff;
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+h1 span{
+  font-size: 1rem;
+  vertical-align: top;
+  display: inline-block;
+  margin-top: 6px;
+}
+
+form{
+  margin-top: 20px;
+}
+
+form input{
+  width: 100%;
+  background-color: transparent;
+  color: #ddd;
+  border: 2px solid #30313d;
+  margin-bottom: 5px;
+  padding: 2px 5px;
+  border-radius: 5px;
+}
+
+form input[type="datetime-local"]{
+  color:#777;
+}
+
+form div.Basics{
+  display: flex;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+form button{
+  width: 100%;
+
+  border: 0;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #ddd;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+div.Tasks{
+  margin-top: 10px;
+
+}
+
+div.Task{
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-top: 1px solid #30313d;
+}
+
+div.Task:first-child{
+  border-top: 0;
+  margin-bottom: 10px;
+  border: #ddddddaf 1px solid;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+div.Task div.title{
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+div.Task div.description{
+  font-size: 1rem;
+  color: #888;
+}
+
+div.right{
+  text-align: right;
+}
+
+div.status.green{
+  color: #1c1;
+}
+
+div.status.red{
+  color: #c11;
+}
+
+div.status.yellow{
+  color: #cc1;
+}
+
+div.Task div.datetime{
+  font-size: 0.8rem;
+  color: #888;
+}
+
+div.Title {
+  text-align: center;
+  margin: 5px;
+}
+
+.View select{
+  width: 100%;
+  padding: 5px;
+  border-radius: 5px;
+  border: 2px solid #30313d;
+  background-color: #30313d ;
+  color: #ddd;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.Status{
+  display: flex;
+  justify-content: center;
+}
+
+.Status select{
+  padding: 5px;
+  border-radius: 5px;
+  border: 2px solid #30313d;
+  background-color: #30313d ;
+  color: #ddd;
+  margin-bottom: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.actions{
+  border-radius: 5px;
+  border: 2px solid #30313d;
+  padding: 3px;
+}
