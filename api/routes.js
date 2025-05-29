@@ -1,7 +1,7 @@
-
 const express = require('express');
 const Task = require('./modules/Task.js');
 const { default: mongoose } = require('mongoose');
+const { register } = require('./metrics');
 const router = express.Router();
 
 router.get('/api/test', (req, res) => {

@@ -12,6 +12,10 @@ spec:
     metadata:
       labels:
         app: task-manager-api
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "5000"
+        prometheus.io/path: "/metrics"
     spec:
       containers:
       - name: api
