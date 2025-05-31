@@ -7,7 +7,7 @@ spec:
     storage: 1Gi
   accessModes:
     - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain  # Los datos persisten aunque elimines el PVC
+  persistentVolumeReclaimPolicy: Retain
   storageClassName: manual
   hostPath:
     path: /data/mongo-persistent
@@ -39,3 +39,17 @@ spec:
   storageClassName: manual
   hostPath:
     path: /data/grafana-persistent
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: keycloak-pv
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
+  hostPath:
+    path: /data/keycloak-persistent

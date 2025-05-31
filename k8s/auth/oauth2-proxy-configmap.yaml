@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oauth2-proxy-config
+  namespace: default
+data:
+  oauth2_proxy.cfg: |
+    provider = "oidc"
+    
+    # URLs públicas para el navegador
+    oidc_issuer_url = "http://keycloak.local/realms/taskmanager"
+    login_url = "http://keycloak.local/realms/taskmanager/protocol/openid-connect/auth"
+    
+    # URLs internas para comunicación entre servicios
+    redeem_url = "http://keycloak-service:8080/realms/taskmanager/protocol/openid-connect/token"
+    profile_url = "http://keycloak-service:8080/realms/taskmanager/protocol/openid-connect/userinfo"
+    validate_url = "http://keycloak-service:8080/realms/taskmanager/protocol/openid-connect/userinfo"
+    oidc_jwks_url = "http://keycloak-service:8080/realms/taskmanager/protocol/openid-connect/certs"
+    
+    client_id = "taskmanager-app"
+    redirect_url = "http://auth.local/oauth2/callback"
+    
+    # Configuración adicional
+    scope = "openid email profile"
+    upstreams = ["http://frontend-service:80"]
+    email_domains = ["*"]
+    cookie_secure = false
+    request_logging = true
+    http_address = "0.0.0.0:4180"
+    
+    # Deshabilitar discovery automático
+    skip_oidc_discovery = true
+    
