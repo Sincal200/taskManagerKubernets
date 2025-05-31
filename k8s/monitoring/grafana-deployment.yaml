@@ -13,6 +13,15 @@ spec:
       labels:
         app: grafana
     spec:
+      initContainers:
+      - name: fix-permissions
+        image: busybox
+        command: ["sh", "-c", "chown -R 472:472 /var/lib/grafana && chmod -R 775 /var/lib/grafana"]
+        volumeMounts:
+        - name: grafana-data
+          mountPath: /var/lib/grafana
+        securityContext:
+          runAsUser: 0
       containers:
       - name: grafana
         image: grafana/grafana:latest
@@ -35,6 +44,10 @@ spec:
           limits:
             memory: "256Mi"
             cpu: "200m"
+        securityContext:
+          runAsUser: 472
+          runAsGroup: 472
+          allowPrivilegeEscalation: false
       volumes:
       - name: grafana-data
         persistentVolumeClaim:

@@ -14,6 +14,15 @@ spec:
         app: prometheus
     spec:
       serviceAccountName: prometheus
+      initContainers:
+      - name: fix-permissions
+        image: busybox
+        command: ["sh", "-c", "chown -R 65534:65534 /prometheus && chmod -R 775 /prometheus"]
+        volumeMounts:
+        - name: prometheus-data
+          mountPath: /prometheus
+        securityContext:
+          runAsUser: 0
       containers:
       - name: prometheus
         image: prom/prometheus:latest
@@ -42,6 +51,10 @@ spec:
           limits:
             memory: "512Mi"
             cpu: "200m"
+        securityContext:
+          runAsUser: 65534
+          runAsGroup: 65534
+          allowPrivilegeEscalation: false
       volumes:
       - name: prometheus-config
         configMap:
