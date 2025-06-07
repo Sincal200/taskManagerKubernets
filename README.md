@@ -146,3 +146,53 @@ kubectl delete -k .
 kubectl delete -f persistent-volumes.yaml # If you applied it separately
 ```
 This will remove all resources defined in the kustomization files but not the PersistentVolume data itself (due to `persistentVolumeReclaimPolicy: Retain`). You'll need to manually delete the data on the host paths if desired.
+
+
+## Posibles Mejoras del Proyecto
+
+Esta sección describe áreas potenciales de mejora para el proyecto Task Manager. Si deseas contribuir o mejorar el proyecto, considera abordar alguno de los siguientes puntos:
+
+### Kubernetes (k8s)
+
+1.  **Uso de Namespaces:**
+    *   Actualmente, la mayoría de los recursos están en el namespace `default`. Considera usar namespaces dedicados (ej. `task-manager-api`, `task-manager-frontend`, `monitoring`, `auth`, `database`) para una mejor organización, aplicación de políticas y control de acceso.
+
+2.  **Gestión de Secretos y Credenciales:**
+    *   **Keycloak:** Las credenciales de administrador (`admin`/`admin123`) en `k8s/auth/keycloak-deployment.yaml` son las predeterminadas y deben cambiarse por unas más seguras, especialmente para producción.
+    *   **Grafana:** Similarmente, las credenciales de administrador (`admin`/`admin123`) en `k8s/monitoring/grafana-deployment.yaml` deben cambiarse.
+    *   **OAuth2 Proxy:** El `client-secret` en `k8s/auth/oauth2-proxy-secret.yaml` necesita ser actualizado con el secreto real del cliente Keycloak.
+    *   Para una gestión de secretos más robusta en producción, se podría explorar el uso de herramientas como HashiCorp Vault o Sealed Secrets.
+
+3.  **Configuración de Producción para Keycloak:**
+    *   El `keycloak-deployment.yaml` usa `start-dev`. Para producción, Keycloak recomienda una configuración diferente, usualmente con una base de datos externa (PostgreSQL, MySQL, etc.) en lugar de la base de datos H2 embebida.
+
+4.  **NetworkPolicies:**
+    *   Implementar `NetworkPolicy` para mejorar la seguridad a nivel de red dentro del clúster, definiendo explícitamente qué pods pueden comunicarse entre sí.
+
+5.  **ImagePullPolicy:**
+    *   En `k8s/api/deployment.yaml` y `k8s/frontend/deployment.yaml`, `imagePullPolicy` está como `Never`. Para producción o al usar un registro de imágenes, considerar cambiarlo a `IfNotPresent` o `Always` (usando etiquetas de imagen específicas en lugar de `latest`).
+
+### API (Node.js/Express)
+
+1.  **Conexión a MongoDB:**
+    *   En `api/routes.js`, `mongoose.connect()` se llama repetidamente. Es mejor establecer la conexión a MongoDB una vez cuando la aplicación se inicia (ej. en `api/index.js`).
+
+2.  **Validación de Entradas:**
+    *   Agregar validación para los datos de entrada en las rutas (ej. `req.body`, `req.params`, `req.query`) usando bibliotecas como `joi` o `express-validator`.
+
+3.  **Métrica `activeTasks`:**
+    *   La métrica `activeTasks` en `api/metrics.js` no parece actualizarse dinámicamente. Implementar la lógica para incrementar/decrementar este gauge según las operaciones de tareas.
+
+### Frontend (React)
+
+1.  **Gestión de Web Workers:**
+    *   En `Frontend/src/App.js`, la inicialización y gestión del worker (`initializeWorker`) podría llevar a la creación de múltiples instancias. Revisar esta lógica para asegurar una gestión eficiente del worker.
+
+2.  **Pruebas (Testing):**
+    *   Expandir las pruebas en `Frontend/src/App.test.js` para cubrir más componentes, interacciones de usuario y lógica de la aplicación.
+
+### General
+
+1.  **Pipeline de CI/CD:**
+    *   Configurar un pipeline de Integración Continua/Despliegue Continuo (CI/CD) utilizando herramientas como GitHub Actions, GitLab CI, Jenkins, etc., para automatizar la construcción, prueba y despliegue.
+
