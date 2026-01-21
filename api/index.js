@@ -3,26 +3,23 @@ const cors = require('cors');
 require('dotenv').config();
 const routes = require('./routes');
 const mongoose = require('mongoose');
-const Task = require('./modules/Task'); // Importamos el modelo
+const Task = require('./modules/Task'); 
 
 const { register, httpRequestsTotal, httpRequestDuration, activeTasks } = require('./metrics');
 
 const app = express();
 
 // --- TAREA EN SEGUNDO PLANO PARA MÉTRICAS ---
-// Actualiza el conteo de tareas cada 15 segundos
 setInterval(async () => {
   try {
     if (mongoose.connection.readyState !== 1) {
       await mongoose.connect(process.env.MONGO_URL);
     }
     
-    // Contar tareas por estado (Coincidiendo con los valores del Frontend: "Pending", "Completed", "In Progress")
     const pending = await Task.countDocuments({ status: 'Pending' });
     const completed = await Task.countDocuments({ status: 'Completed' });
     const inProgress = await Task.countDocuments({ status: 'In Progress' });
 
-    // Actualizar métricas de Prometheus
     activeTasks.set({ status: 'pending' }, pending);
     activeTasks.set({ status: 'completed' }, completed);
     activeTasks.set({ status: 'in_progress' }, inProgress);
@@ -55,7 +52,7 @@ app.use((req, res, next) => {
 app.use(cors());
 app.use(express.json());
 
-// ✅ ENDPOINTS CRÍTICOS DIRECTAMENTE EN INDEX.JS
+
 app.get('/health', (req, res) => {
   res.status(200).json({ 
     status: 'OK', 
@@ -74,7 +71,7 @@ app.get('/metrics', async (req, res) => {
   }
 });
 
-// Rutas de la aplicación
+
 app.use(routes);
 
 const PORT = process.env.PORT || 5000;

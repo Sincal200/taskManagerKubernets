@@ -10,7 +10,6 @@ router.get('/api/test', (req, res) => {
 
 router.post('/api/task', async (req, res) => {
     try {
-        await mongoose.connect(process.env.MONGO_URL);
         const { title, description, status, datetime } = req.body;
         const task = await Task.create({ title, description, status, datetime });
         res.json(task);
@@ -21,20 +20,17 @@ router.post('/api/task', async (req, res) => {
 });
 
 router.get('/api/tasks', async (req, res) => {
-    await mongoose.connect(process.env.MONGO_URL);
     const tasks = await Task.find({});
     res.json(tasks);
 });
 
 router.get('', async (req, res) => {
-    await mongoose.connect(process.env.MONGO_URL);
     const tasks = await Task.find({});
     res.json(tasks);
 });
 
 router.delete('/api/tasks/:id', async (req, res) => {
     try {
-        await mongoose.connect(process.env.MONGO_URL);
         const result = await Task.findByIdAndDelete(req.params.id);
         if (result) {
             res.status(200).json({ message: 'Task deleted successfully', _id: req.params.id });
@@ -63,7 +59,6 @@ router.put('/api/update/tasks/:id', async (req, res) => {
 
 router.get('/api/tasks/:status', async (req, res) => {
     try {
-        await mongoose.connect(process.env.MONGO_URL);
         const status = req.params.status;
         const tasks = await Task.find({ status });
         res.json(tasks);
