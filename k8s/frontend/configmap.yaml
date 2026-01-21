@@ -4,5 +4,5 @@ metadata:
   name: frontend-config
   namespace: default
 data:
-  REACT_APP_API_URL: "http://task-manager-api.local/api"
+  REACT_APP_API_URL: "https://api.sincal.software/api"
   NODE_ENV: "production"

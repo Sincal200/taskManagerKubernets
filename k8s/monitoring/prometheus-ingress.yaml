@@ -5,10 +5,15 @@ metadata:
   namespace: default
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   ingressClassName: nginx
+  tls:
+  - hosts:
+    - prometheus.sincal.software
+    secretName: prometheus-tls
   rules:
-  - host: prometheus.local
+  - host: prometheus.sincal.software
     http:
       paths:
       - path: /

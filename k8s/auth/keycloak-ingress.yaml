@@ -4,12 +4,16 @@ metadata:
   name: keycloak-ingress
   namespace: default
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/proxy-buffer-size: "16k"
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   ingressClassName: nginx
+  tls:
+  - hosts:
+    - keycloak.sincal.software
+    secretName: keycloak-tls
   rules:
-  - host: keycloak.local
+  - host: keycloak.sincal.software
     http:
       paths:
       - path: /

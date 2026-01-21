@@ -8,17 +8,19 @@ data:
     provider = "oidc"
     
     # URLs públicas para el navegador
-    oidc_issuer_url = "http://keycloak.local/realms/taskmanager"
-    login_url = "http://keycloak.local/realms/taskmanager/protocol/openid-connect/auth"
+    oidc_issuer_url = "https://keycloak.sincal.software/realms/taskmanager"
+    login_url = "https://keycloak.sincal.software/realms/taskmanager/protocol/openid-connect/auth"
     
     # URLs internas para comunicación entre servicios
     redeem_url = "http://keycloak-service:8080/realms/taskmanager/protocol/openid-connect/token"
-    profile_url = "http://keycloak-service:8080/realms/taskmanager/protocol/openid-connect/userinfo"
-    validate_url = "http://keycloak-service:8080/realms/taskmanager/protocol/openid-connect/userinfo"
     oidc_jwks_url = "http://keycloak-service:8080/realms/taskmanager/protocol/openid-connect/certs"
+
+    # Profile URL comentada intencionalmente, obtenemos info del ID Token
+    # profile_url = "http://keycloak-service:8080/realms/taskmanager/protocol/openid-connect/userinfo"
+    # validate_url = "http://keycloak-service:8080/realms/taskmanager/protocol/openid-connect/userinfo"
     
     client_id = "taskmanager-app"
-    redirect_url = "http://auth.local/oauth2/callback"
+    redirect_url = "https://auth.sincal.software/oauth2/callback"
     
     # Configuración adicional
     scope = "openid email profile"

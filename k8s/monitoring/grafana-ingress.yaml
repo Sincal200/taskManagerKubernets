@@ -5,10 +5,15 @@ metadata:
   namespace: default
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   ingressClassName: nginx
+  tls:
+  - hosts:
+    - grafana.sincal.software
+    secretName: grafana-tls
   rules:
-  - host: grafana.local
+  - host: grafana.sincal.software
     http:
       paths:
       - path: /

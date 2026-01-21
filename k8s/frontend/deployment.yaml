@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: task-manager-frontend:latest
-        imagePullPolicy: Never
+        image: sincal/task_manager_frontend:v2
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
         env:

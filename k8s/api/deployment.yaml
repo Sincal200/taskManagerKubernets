@@ -19,8 +19,8 @@ spec:
     spec:
       containers:
       - name: api
-        image: task-manager-api:latest
-        imagePullPolicy: Never
+        image: sincal/task_manager_backend:v1
+        imagePullPolicy: Always
         ports:
         - containerPort: 5000
         env:

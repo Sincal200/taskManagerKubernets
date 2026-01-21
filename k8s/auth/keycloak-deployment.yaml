@@ -26,10 +26,18 @@ spec:
       - name: keycloak
         image: quay.io/keycloak/keycloak:22.0
         args:
-          - start-dev
+          - start
           - --import-realm
-          - --hostname=keycloak.local  # AGREGAR ESTA LÍNEA
+          - --hostname=keycloak.sincal.software
         env:
+        - name: KC_DB
+          value: postgres
+        - name: KC_DB_URL
+          value: "jdbc:postgresql://keycloak-postgres:5432/keycloak"
+        - name: KC_DB_USERNAME
+          value: "keycloak"
+        - name: KC_DB_PASSWORD
+          value: "password123"
         - name: KEYCLOAK_ADMIN
           value: "admin"
         - name: KEYCLOAK_ADMIN_PASSWORD
@@ -40,6 +48,8 @@ spec:
           value: "false"
         - name: KC_HTTP_ENABLED
           value: "true"
+        - name: KC_PROXY
+          value: "edge"
         - name: KC_HEALTH_ENABLED
           value: "true"
         ports:
