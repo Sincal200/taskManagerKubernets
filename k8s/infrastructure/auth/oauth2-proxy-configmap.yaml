@@ -14,10 +14,6 @@ data:
     # URLs internas para comunicación entre servicios
     redeem_url = "http://keycloak-service:8080/realms/taskmanager/protocol/openid-connect/token"
     oidc_jwks_url = "http://keycloak-service:8080/realms/taskmanager/protocol/openid-connect/certs"
-
-    # Profile URL comentada intencionalmente, obtenemos info del ID Token
-    # profile_url = "http://keycloak-service:8080/realms/taskmanager/protocol/openid-connect/userinfo"
-    # validate_url = "http://keycloak-service:8080/realms/taskmanager/protocol/openid-connect/userinfo"
     
     client_id = "taskmanager-app"
     redirect_url = "https://auth.sincal.software/oauth2/callback"
