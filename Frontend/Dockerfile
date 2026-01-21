@@ -11,6 +11,10 @@ COPY . .
 ARG REACT_APP_API_URL
 ENV REACT_APP_API_URL=$REACT_APP_API_URL
 
+# Debug: List files to ensure public/index.html exists
+RUN ls -la /app
+RUN ls -la /app/public || echo "Public folder missing!"
+
 # Disable CI to prevent treating warnings as errors
 ENV CI=false
 RUN npm run build
