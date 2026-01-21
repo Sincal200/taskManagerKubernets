@@ -8,5 +8,5 @@ resources:
   - oauth2-proxy-deployment.yaml
   - oauth2-proxy-service.yaml
   - oauth2-proxy-configmap.yaml
-  - oauth2-proxy-secret.yaml
+  - oauth2-proxy-sealed-secret.yaml
   - oauth2-proxy-ingress.yaml

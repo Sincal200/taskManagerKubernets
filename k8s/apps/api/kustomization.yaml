@@ -4,6 +4,6 @@ resources:
   - configmap.yaml
   - deployment.yaml
   - ingress.yaml
-  - secret.yaml
+  - sealed-secret.yaml
   - service.yaml
   - hpa.yaml
