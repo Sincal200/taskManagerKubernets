@@ -46,7 +46,7 @@ jobs:
 
     # 2. Obtener credenciales del Cluster
     - name: Save DigitalOcean Kubeconfig
-      run: doctl kubernetes cluster kubeconfig save k8s-1-34-1-do-2-nyc1-1768961352688
+      run: doctl kubernetes cluster kubeconfig save ea402665-3888-4426-be63-bc21e3ea1b9b
 
     # 3. Aplicar los cambios al Cluster REAL
     - name: Deploy to Kubernetes
