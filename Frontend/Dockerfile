@@ -6,14 +6,16 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
-COPY . .
+# Explicitly copy public and src folders
+COPY public/ ./public/
+COPY src/ ./src/
+# Copy config files
+COPY nginx.conf ./
+# Copy whatever else is left (like .env if needed, though strictly we mapped it)
+# COPY . . 
 
 ARG REACT_APP_API_URL
 ENV REACT_APP_API_URL=$REACT_APP_API_URL
-
-# Debug: List files to ensure public/index.html exists
-RUN ls -la /app
-RUN ls -la /app/public || echo "Public folder missing!"
 
 # Disable CI to prevent treating warnings as errors
 ENV CI=false
