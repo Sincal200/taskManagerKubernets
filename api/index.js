@@ -17,15 +17,15 @@ setInterval(async () => {
       await mongoose.connect(process.env.MONGO_URL);
     }
     
-    // Contar tareas por estado
-    const pending = await Task.countDocuments({ status: 'pending' });
-    const completed = await Task.countDocuments({ status: 'completed' });
-    const inProgress = await Task.countDocuments({ status: 'in-progress' });
+    // Contar tareas por estado (Coincidiendo con los valores del Frontend: "Pending", "Completed", "In Progress")
+    const pending = await Task.countDocuments({ status: 'Pending' });
+    const completed = await Task.countDocuments({ status: 'Completed' });
+    const inProgress = await Task.countDocuments({ status: 'In Progress' });
 
     // Actualizar métricas de Prometheus
     activeTasks.set({ status: 'pending' }, pending);
     activeTasks.set({ status: 'completed' }, completed);
-    activeTasks.set({ status: 'in-progress' }, inProgress);
+    activeTasks.set({ status: 'in_progress' }, inProgress);
     
   } catch (error) {
     console.error('Error updating task metrics:', error.message);
