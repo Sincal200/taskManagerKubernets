@@ -6,13 +6,8 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
-# Explicitly copy public and src folders
-COPY public/ ./public/
-COPY src/ ./src/
-# Copy config files
-COPY nginx.conf ./
-# Copy whatever else is left (like .env if needed, though strictly we mapped it)
-# COPY . . 
+# Revert to COPY . . but it should work if context is correct
+COPY . .
 
 ARG REACT_APP_API_URL
 ENV REACT_APP_API_URL=$REACT_APP_API_URL
