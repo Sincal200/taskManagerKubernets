@@ -88,7 +88,7 @@ function App() {
     <main>
       <form onSubmit={editingTask ? handleUpdateTask : handleAddNewTask}>
         <div className='Title'>
-          <h1>Task Manager Test</h1>
+          <h1>Task Manager Test1</h1>
         </div>
         <div className='View'>
           <select value={viewStatus} onChange={handleViewStatusChange}>
