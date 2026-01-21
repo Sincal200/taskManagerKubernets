@@ -28,6 +28,15 @@ data:
     email_domains = ["*"]
     cookie_secure = false
     request_logging = true
+
+    # Excluir autenticación para estáticos y manifest
+    skip_auth_regex = [
+      "^/manifest.json$",
+      "^/robots.txt$",
+      "^/favicon.ico$",
+      "^/static/.*",
+      "^/logo.*"
+    ]
     http_address = "0.0.0.0:4180"
     
     # Deshabilitar discovery automático

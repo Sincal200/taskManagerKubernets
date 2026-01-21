@@ -370,7 +370,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(rate(http_requests_total{job=\"api\"}[5m])) by (route, method)",
+          "expr": "sum(rate(http_requests_total{job=\"api\", status_code!=\"404\"}[5m])) by (route, method)",
           "legendFormat": "{{method}} {{route}}",
           "range": true,
           "refId": "A"
@@ -465,7 +465,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.50, sum(rate(http_request_duration_seconds_bucket{job=\"api\"}[5m])) by (le, route))",
+          "expr": "histogram_quantile(0.50, sum(rate(http_request_duration_seconds_bucket{job=\"api\", status_code!=\"404\"}[5m])) by (le, route))",
           "legendFormat": "P50 {{route}}",
           "range": true,
           "refId": "A"
@@ -476,7 +476,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{job=\"api\"}[5m])) by (le, route))",
+          "expr": "histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{job=\"api\", status_code!=\"404\"}[5m])) by (le, route))",
           "hide": false,
           "legendFormat": "P95 {{route}}",
           "range": true,
@@ -488,7 +488,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket{job=\"api\"}[5m])) by (le, route))",
+          "expr": "histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket{job=\"api\", status_code!=\"404\"}[5m])) by (le, route))",
           "hide": false,
           "legendFormat": "P99 {{route}}",
           "range": true,

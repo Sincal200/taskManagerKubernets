@@ -2,10 +2,35 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const routes = require('./routes');
+const mongoose = require('mongoose');
+const Task = require('./modules/Task'); // Importamos el modelo
 
-const { register, httpRequestsTotal, httpRequestDuration } = require('./metrics');
+const { register, httpRequestsTotal, httpRequestDuration, activeTasks } = require('./metrics');
 
 const app = express();
+
+// --- TAREA EN SEGUNDO PLANO PARA MÉTRICAS ---
+// Actualiza el conteo de tareas cada 15 segundos
+setInterval(async () => {
+  try {
+    if (mongoose.connection.readyState !== 1) {
+      await mongoose.connect(process.env.MONGO_URL);
+    }
+    
+    // Contar tareas por estado
+    const pending = await Task.countDocuments({ status: 'pending' });
+    const completed = await Task.countDocuments({ status: 'completed' });
+    const inProgress = await Task.countDocuments({ status: 'in-progress' });
+
+    // Actualizar métricas de Prometheus
+    activeTasks.set({ status: 'pending' }, pending);
+    activeTasks.set({ status: 'completed' }, completed);
+    activeTasks.set({ status: 'in-progress' }, inProgress);
+    
+  } catch (error) {
+    console.error('Error updating task metrics:', error.message);
+  }
+}, 15000); 
 
 // Middleware para métricas
 app.use((req, res, next) => {

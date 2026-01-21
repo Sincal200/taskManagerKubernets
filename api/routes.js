@@ -9,10 +9,15 @@ router.get('/api/test', (req, res) => {
 });
 
 router.post('/api/task', async (req, res) => {
-    await mongoose.connect(process.env.MONGO_URL);
-    const { title, description, status, datetime } = req.body;
-    const task = await Task.create({ title, description, status, datetime });
-    res.json(task);
+    try {
+        await mongoose.connect(process.env.MONGO_URL);
+        const { title, description, status, datetime } = req.body;
+        const task = await Task.create({ title, description, status, datetime });
+        res.json(task);
+    } catch (error) {
+        console.error('Error creating task:', error);
+        res.status(400).json({ message: 'Error creating task', error: error.message });
+    }
 });
 
 router.get('/api/tasks', async (req, res) => {
